@@ -1,0 +1,14 @@
+version: '3'
+
+tasks:
+  generate-templ:
+    cmds:
+      - templ generate
+  run:
+    deps: [generate-templ]
+    cmds:
+      - go run .
+  build:
+    deps: [generate-templ]
+    cmds:
+      - GOOS=linux GOARCH=amd64 go build .

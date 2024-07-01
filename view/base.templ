@@ -1,0 +1,41 @@
+package view
+
+
+templ Base(name string) {
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{ name }</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.1/css/bulma.min.css">
+    <script src="https://unpkg.com/htmx.org@2.0.0" integrity="sha384-wS5l5IKJBvK6sPTKa2WZ1js3d947pvWXbPJ1OmWfEuxLgeHcEbjUUA5i9V5ZkpCw" crossorigin="anonymous"></script>
+  </head>
+  <body>
+  <section class="section">
+    <div class="container">
+      <h1 class="title">
+      Welcome to { name }
+      </h1>
+      <p class="subtitle">
+        File share with <strong>{ name }</strong>!
+      </p>
+    </div>
+  </section>
+  <section class="uploads">
+    <form id='form' hx-encoding='multipart/form-data' hx-post='/upload'>
+        <input type='file' name='file' multiple>
+        <button>
+            Upload
+        </button>
+        <progress id='progress' value='0' max='100'></progress>
+    </form>
+    <script>
+        htmx.on('#form', 'htmx:xhr:progress', function(evt) {
+          htmx.find('#progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+        });
+    </script>
+  </section>
+  </body>
+</html>
+}
